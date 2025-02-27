@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=K2D:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <title>Hướng nghiệp - Nông nghiệp</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(to right, #1f5ca9, #00afef);
+            color: white;
+            font-family: 'K2D', sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .content {
+            display: none;
+        }
+        .images {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .images img {
+            width: 300px;
+            height: auto;
+            object-fit: cover; /* Cắt ảnh để vừa khít mà không méo */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+            text-align: center;
+            font-family: 'K2D', sans-serif;
+        }
+        button {
+            padding: 10px 15px;
+            background: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background 0.3s;
+            margin-top: 10px;
+            font-family: 'K2D', sans-serif;
+        }
+        button:hover {
+            background: lightgray;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="title">Vòng 1: TIÊU CHÍ CHỌN NGHỀ</h1>
+    <button id="startButton">Bắt đầu</button>
+
+    <div class="content" id="gameContent">
+        <p>Lưu ý: Chỉ điền ký tự thường không viết hoa.</p>
+        <div class="images" id="imageContainer">
+            <img src="2.avif" alt="Hình 1">
+            <img src="uocmo1.jpg" alt="Hình 2">
+        </div>
+        <input type="text" id="userInput" placeholder="Nhập câu trả lời hoặc mã...">
+        <button id="submitButton">Xác nhận</button>
+    </div>
+    <script>
+        const steps = [
+            { answer: "ước mơ", secretCode: "xb7a2q" },
+            { answer: "kinh tế", secretCode: "lm9ztk" },
+            { answer: "cơ hội việc làm", secretCode: "pq4ynv" },
+            { answer: "trường đại học", secretCode: "tg6wdj" }
+        ];
+    
+        let currentStep = 0;
+    
+        document.getElementById("startButton").addEventListener("click", function() {
+            document.getElementById("startButton").style.display = "none";
+            document.getElementById("gameContent").style.display = "block";
+        });
+    
+        document.getElementById("submitButton").addEventListener("click", function() {
+            let userInput = document.getElementById("userInput").value.trim().toLowerCase();
+            let correctAnswer = steps[currentStep].answer.toLowerCase();
+            let correctCode = steps[currentStep].secretCode.toLowerCase();
+    
+            if (userInput === correctAnswer || userInput === correctCode) {
+                currentStep++;
+    
+                if (currentStep < steps.length) {
+                    updateImages();
+                    document.getElementById("userInput").value = "";
+                } else {
+                    document.getElementById("title").innerText = "Hoàn thành Vòng 1!";
+                    document.getElementById("gameContent").innerHTML = `<button onclick="startRound2()">Tiếp tục</button>`;
+                }
+            } else {
+                alert("Sai! Hãy thử lại hoặc nhập mã bí mật.");
+            }
+        });
+    
+        function updateImages() {
+            const imageSets = [
+                ["2.avif", "uocmo1.jpg"],
+                ["kinhte1.jpg", "https://image.slidesdocs.com/responsive-images/background/a-stack-of-banknotes-in-a-dark-room-powerpoint-background_c64b3fc8fb__960_540.jpg"],
+                ["https://phunugioi.com/wp-content/uploads/2022/03/anh-bat-tay-giao-tiep.jpg", "https://tracnghiemsinhhoc.com/wp-content/uploads/2021/10/b00600d871aa245762f1e40a4625caad.jpg"],
+                ["https://static.kinhtedothi.vn/w960/images/upload/2022/10/10/3aa3f7ac1cbfdbe182ae.jpg", "https://tse2.mm.bing.net/th?id=OIP.U4-_aK7UnWj9OVrWEch0wgHaE0&pid=Api&P=0&h=180"]
+            ];
+    
+            if (currentStep < imageSets.length) {
+                let images = document.getElementById("imageContainer").getElementsByTagName("img");
+                images[0].src = imageSets[currentStep][0];
+                images[1].src = imageSets[currentStep][1];
+            }
+        }
+        
+        let round2Code = "DHCTCNSH"; // Mã bí mật cho vòng 2
+
+    function startRound2() {
+        document.body.innerHTML = `
+            <h1>Vòng 2: Tìm hiểu về trường Nông nghiệp Đại học Cần Thơ</h1>
+            <h2>Câu hỏi tìm hiểu</h2>
+            <ul style="text-align: left; max-width: 600px;">
+                <li>1. Trường đại học Cần Thơ được thành lập bao nhiêu năm?</li>
+                <li>2. Số ngành đào tạo đại học của trường Nông nghiệp?</li>
+                <li>3. Tổ hợp xét tuyển của ngành Thú Y?</li>
+                <li>4. Điểm chuẩn ngành Thú y năm 2024?</li>
+            </ul>
+            
+            <input type="text" id="round2Input" placeholder="Nhập mã 8 ký tự..." maxlength="8">
+            <button onclick="checkRound2Code()">Xác nhận</button>
+        `;
+    }
+
+    function checkRound2Code() {
+        let userInput = document.getElementById("round2Input").value.trim().toUpperCase();
+        if (userInput === round2Code) {
+            startRound3();
+        } else {
+            alert("Mã không chính xác, vui lòng thử lại!");
+        }
+    }
+
+    let round3Code = "SPSH10B12025"; // Mã bí mật cho vòng 3
+
+    function startRound3() {
+        document.body.innerHTML = `
+            <h1>Vòng 3: Khám phá ngành nghề</h1>
+            <p>Xác định nghề nghiệp thuộc lĩnh vực nào trong 3 lĩnh vực Nông nghiệp, Lâm nghiệp và Thủy sản?</p>
+            <p>kỹ sư nuôi trồng thủy sản,bảo vệ thực vật,kỹ sư nông nghiệp, kỹ sư lâm nghiệp,bác sĩ thú y,chuyên gia chế biến thủy sản.</p>
+            <input type="text" id="round3Input" placeholder="Nhập mã chiến thắng..." maxlength="20">
+            <button onclick="checkRound3Code()">Xác nhận</button>
+        `;
+    }
+
+    function checkRound3Code() {
+        let userInput = document.getElementById("round3Input").value.trim().toUpperCase();
+        if (userInput === round3Code) {
+            showVictory();
+        } else {
+            alert("Mã không chính xác, vui lòng thử lại!");
+        }
+    }
+
+    function showVictory() {
+        document.body.innerHTML = `
+            <h1 id="victory-text">🎉 Chúc mừng! Bạn đã chiến thắng! 🎉</h1>
+            <div id="hearts-container"></div>
+            <style>
+                body {
+                    background: linear-gradient(to right, #ff758c, #ff7eb3);
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100vh;
+                    overflow: hidden;
+                    text-align: center;
+                }
+                #victory-text {
+                    font-size: 2.5em;
+                    font-weight: bold;
+                    color: white;
+                    text-transform: uppercase;
+                    animation: wave 2s infinite alternate, glow 1.5s infinite alternate;
+                }
+                @keyframes wave {
+                    0% { transform: translateY(0px); }
+                    100% { transform: translateY(-10px); }
+                }
+                @keyframes glow {
+                    0% { text-shadow: 0 0 10px white, 0 0 20px pink; }
+                    100% { text-shadow: 0 0 20px white, 0 0 40px red; }
+                }
+                .heart {
+                    position: absolute;
+                    color: red;
+                    font-size: 24px;
+                    opacity: 0;
+                    animation: float 5s linear infinite;
+                }
+                @keyframes float {
+                    0% { opacity: 1; transform: translateY(0) scale(0.5); }
+                    50% { opacity: 0.8; transform: translateY(-100px) scale(1.2); }
+                    100% { opacity: 0; transform: translateY(-200px) scale(0.8); }
+                }
+            </style>
+        `;
+
+        generateHearts();
+    }
+
+    function generateHearts() {
+        setInterval(() => {
+            let heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerHTML = "❤️";
+            document.body.appendChild(heart);
+
+            // Vị trí ngẫu nhiên trên màn hình
+            let xPos = Math.random() * window.innerWidth;
+            let yPos = window.innerHeight;
+
+            heart.style.left = `${xPos}px`;
+            heart.style.top = `${yPos}px`;
+            heart.style.fontSize = `${20 + Math.random() * 30}px`;
+            heart.style.animationDuration = `${3 + Math.random() * 3}s`;
+
+            // Xóa trái tim sau khi hoàn tất animation
+            setTimeout(() => heart.remove(), 6000);
+        }, 500);
+    }
+    </script>
+
+</body>
+</html>
